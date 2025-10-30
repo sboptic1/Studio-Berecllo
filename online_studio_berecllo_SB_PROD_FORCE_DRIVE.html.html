@@ -1,0 +1,1011 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Studio Berecllo — By S.B</title>
+
+<!-- Favicon B noir -->
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect rx='12' ry='12' width='64' height='64' fill='%23000'/%3E%3Ctext x='50%25' y='54%25' dominant-baseline='middle' text-anchor='middle' fill='%23fff' font-family='Helvetica Neue' font-size='28' font-weight='300'%3EB%3C/text%3E%3C/svg%3E">
+
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --headerH:95px;
+  --border:#e6e8ee;
+  --gold1:#fff4c2;
+  --gold2:#f1d98a;
+  --gold3:#e0c066;
+  --gold4:#b8943e;
+  --gold5:#f9e9ad;
+}
+*{box-sizing:border-box;}
+body{
+  margin:0;
+  background:#f6f7fa;
+  color:#111;
+  font:15px/1.6 'Helvetica Neue',Helvetica,Arial,sans-serif;
+}
+
+/* HEADER */
+.header-wrap{
+  position:fixed;
+  inset:0 0 auto 0;
+  height:var(--headerH);
+  background:#fff;
+  border-bottom:1px solid var(--border);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 24px;
+  z-index:100;
+  box-shadow:0 8px 24px rgba(0,0,0,.05);
+}
+.brand{
+  display:flex;
+  align-items:center;
+  height:100%;
+}
+.brand a{
+  display:flex;
+  align-items:center;
+  height:100%;
+  text-decoration:none;
+}
+.brand svg{
+  height:60px;
+  width:auto;
+  display:block;
+}
+.headerTexts{
+  text-align:right;
+}
+.title{
+  font:300 22px/1 'Helvetica Neue',sans-serif;
+  letter-spacing:.06em;
+  color:#111;
+  margin:0;
+}
+.subTitleSmall{
+  font-size:12px;
+  font-weight:500;
+  color:#6b7280;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  margin:4px 0 0 0;
+}
+
+/* PAGE LAYOUT */
+.page{
+  padding-top:calc(var(--headerH) + 20px);
+}
+.wrap{
+  max-width:1760px;
+  margin:0 auto;
+  padding:0 24px;
+}
+.grid{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) 420px;
+  gap:32px;
+}
+@media(max-width:1200px){
+  .grid{grid-template-columns:1fr;}
+}
+
+/* CARD PRINCIPALE */
+.card{
+  background:#fff;
+  border:1px solid var(--border);
+  border-radius:20px;
+  box-shadow:0 12px 30px rgba(0,0,0,.06);
+  display:flex;
+  flex-direction:column;
+}
+.viewer{
+  position:relative;
+  aspect-ratio:2048/1265;
+  width:100%;
+  border-radius:20px 20px 0 0;
+  overflow:hidden;
+  background:#eef2f7;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  touch-action:pan-y;
+  transform-origin:center center;
+}
+canvas{
+  width:100%;
+  height:100%;
+  display:block;
+  background:#eef2f7;
+}
+.model-label{
+  position:absolute;
+  left:50%;
+  bottom:20px;
+  transform:translateX(-50%);
+  padding:12px 18px;
+  border-radius:14px;
+  background:rgba(255,255,255,.96);
+  border:1px solid rgba(0,0,0,.1);
+  backdrop-filter:blur(6px);
+  font:300 21px/1.2 'Helvetica Neue',sans-serif;
+  letter-spacing:.12em;
+  color:#0b0d10;
+  box-shadow:0 10px 24px rgba(0,0,0,.12);
+  white-space:nowrap;
+  max-width:90%;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  text-align:center;
+}
+
+/* TOOLBAR */
+.toolbar{
+  border-top:1px solid var(--border);
+  padding:16px 20px;
+  display:flex;
+  justify-content:flex-end;
+  gap:12px;
+  flex-wrap:wrap;
+}
+.btn3d{
+  cursor:pointer;
+  border:0;
+  border-radius:12px;
+  padding:12px 18px;
+  font:400 15px/1.1 'Helvetica Neue',sans-serif;
+  color:#111;
+  background:#fff;
+  position:relative;
+  isolation:isolate;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.9),
+             0 6px 16px rgba(0,0,0,.08);
+  transition:transform .1s,box-shadow .15s;
+}
+.btn3d::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  border-radius:12px;
+  padding:2px;
+  background:conic-gradient(from 210deg,#dfe7f4,#a8b9d0,#6f87a6,#e9f0fb,#8aa3c7,#dfe7f4);
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+  -webkit-mask-composite:xor;
+  mask-composite:exclude;
+  pointer-events:none;
+}
+.btn3d:hover{
+  transform:translateY(-1px);
+  box-shadow:0 10px 26px rgba(0,0,0,.15);
+}
+.btn3d.plus{
+  width:46px;
+  height:44px;
+  font-size:22px;
+  line-height:1;
+  padding:0;
+  text-align:center;
+}
+
+/* PANNEAUX CÔTÉ DROIT */
+.side{
+  display:flex;
+  flex-direction:column;
+  gap:22px;
+}
+.panel{
+  background:#fff;
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:16px 16px 20px;
+  box-shadow:0 12px 30px rgba(0,0,0,.06);
+}
+.panelHeader{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:10px;
+}
+.panelHeader h2{
+  margin:0;
+  font:600 18px/1 'Montserrat',sans-serif;
+  color:#111;
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.gal{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:14px;
+}
+@media(max-width:600px){
+  .gal{grid-template-columns:repeat(3,1fr);}
+}
+@media(min-width:1400px){
+  .gal{grid-template-columns:repeat(7,1fr);}
+}
+
+/* VIGNETTES */
+.thumb{
+  position:relative;
+  border-radius:12px;
+  overflow:hidden;
+  min-height:80px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  background:#fafafa;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.9),
+    0 6px 14px rgba(0,0,0,.06);
+  transition:all .2s;
+  font-family:'Montserrat',sans-serif;
+  font-weight:600;
+}
+.thumb::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  border-radius:12px;
+  padding:2px;
+  pointer-events:none;
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+  -webkit-mask-composite:xor;
+  mask-composite:exclude;
+  background:linear-gradient(180deg,#fdfdfd,#f2f2f2);
+}
+.thumb:hover{
+  transform:translateY(-2px);
+  filter:brightness(1.05);
+}
+.thumb[aria-selected=true]::before{
+  background:conic-gradient(from 0deg,var(--gold1),var(--gold2),var(--gold3),var(--gold4),var(--gold5),var(--gold1));
+  border:3px solid transparent;
+}
+.thumb[aria-selected=true]{
+  color:#000;
+  box-shadow:
+    0 0 10px rgba(255,215,0,.5),
+    inset 0 0 4px rgba(255,255,255,.9),
+    0 6px 14px rgba(0,0,0,.06);
+}
+.badge{
+  font:600 13px/1.3 'Montserrat',sans-serif;
+  color:#111;
+  letter-spacing:.06em;
+  text-align:center;
+  padding:8px;
+  word-break:break-word;
+}
+
+/* NOTE (masquée pour prod visuelle) */
+.note{
+  margin:10px 0 20px 20px;
+  font:600 12px 'Montserrat',sans-serif;
+  color:#8a8f9a;
+  visibility:hidden;
+}
+
+/* INPUT FICHIERS */
+.hidden{display:none}
+
+/* TOAST FAVORIS */
+.toast{
+  position:fixed;
+  left:50%;
+  bottom:40px;
+  transform:translateX(-50%);
+  background:rgba(255,255,255,.95);
+  border:1px solid rgba(0,0,0,.1);
+  border-radius:12px;
+  padding:12px 22px;
+  font:600 15px 'Montserrat',sans-serif;
+  color:#000;
+  box-shadow:0 4px 20px rgba(0,0,0,.15);
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .4s;
+  z-index:9999;
+}
+.toast.show{opacity:1}
+</style>
+</head>
+<body>
+
+<header class="header-wrap">
+  <div class="brand">
+    <a href="https://berecllo.fr/" target="_blank" title="Visiter le site Berecllo">
+      <!-- Logo Berecllo inline (fallback noir).
+           Remplace ce <svg> par le SVG officiel si besoin -->
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 60" width="200" height="60" fill="none" aria-label="Berecllo">
+        <text x="0" y="42"
+          font-family="Helvetica Neue, Arial, sans-serif"
+          font-size="36"
+          fill="#000"
+          font-weight="600"
+          letter-spacing="0.05em">
+          Berecllo
+        </text>
+      </svg>
+    </a>
+  </div>
+  <div class="headerTexts">
+    <h1 class="title">Studio Berecllo — By&nbsp;S.B</h1>
+    <div class="subTitleSmall">Configuration monture • rendu photo-réaliste</div>
+  </div>
+</header>
+
+<div class="page">
+  <div class="wrap">
+    <div class="grid">
+
+      <!-- zone centrale (rendu monture) -->
+      <div class="card">
+        <div class="viewer" id="viewer">
+          <canvas id="cv" width="2048" height="1265"></canvas>
+          <div class="model-label" id="modelLabel">—</div>
+        </div>
+        <div class="toolbar">
+          <button class="btn3d" id="btnFav">❤ Favoris</button>
+          <button class="btn3d" id="btnShare">⇪ Partager</button>
+          <button class="btn3d" id="btnExport">⬇ Exporter</button>
+        </div>
+        <p class="note" id="driveNote">...</p>
+      </div>
+
+      <!-- colonne droite (faces / branches / favoris) -->
+      <aside class="side">
+        <div class="panel">
+          <div class="panelHeader">
+            <h2>Faces</h2>
+            <button class="btn3d plus" id="btnAddFaces">+</button>
+            <input id="inFaces" class="hidden" type="file" accept="image/*" multiple>
+          </div>
+          <div id="galFaces" class="gal"></div>
+        </div>
+
+        <div class="panel">
+          <div class="panelHeader">
+            <h2>Branches</h2>
+            <button class="btn3d plus" id="btnAddTemples">+</button>
+            <input id="inTemples" class="hidden" type="file" accept="image/*" multiple>
+          </div>
+          <div id="galTemples" class="gal"></div>
+        </div>
+
+        <div class="panel">
+          <div class="panelHeader"><h2>Favoris</h2></div>
+          <div id="galFavs" class="gal"></div>
+        </div>
+      </aside>
+
+    </div>
+  </div>
+</div>
+
+<div id="toast" class="toast">⭐ Ajouté aux favoris</div>
+
+<script>
+/* ===========================
+   CONFIG DRIVE
+   =========================== */
+const DRIVE = {
+  API_KEY: "AIzaSyAGTWwPZRyT6P8G2FlfeCRPnlADalQmE-0",
+  FACES_FOLDER_ID: "1sYQqBv9T_CFFeJBS_9otKVz6Q1HONoBx",
+  TEMPLES_FOLDER_ID: "1Uorpg-crCvjlAsYq4Lky2yGRxV2iWwEf",
+  WORKER_URL: "https://berecllo-proxy1.sb-optic1.workers.dev"
+};
+
+/* ===========================
+   DOM refs
+   =========================== */
+const cv = document.getElementById('cv');
+const ctx = cv.getContext('2d',{willReadFrequently:true});
+
+const modelLabel = document.getElementById('modelLabel');
+
+const viewer     = document.getElementById('viewer');
+const galFaces   = document.getElementById('galFaces');
+const galTemples = document.getElementById('galTemples');
+const galFavs    = document.getElementById('galFavs');
+
+const inFaces    = document.getElementById('inFaces');
+const inTemples  = document.getElementById('inTemples');
+
+const btnFav     = document.getElementById('btnFav');
+const btnShare   = document.getElementById('btnShare');
+const btnExport  = document.getElementById('btnExport');
+
+const driveNote  = document.getElementById('driveNote');
+const toast      = document.getElementById('toast');
+
+/* ===========================
+   STATE
+   =========================== */
+const state = {
+  faces: [],        // {name, img, proc, modified?}
+  temples: [],      // {name, img, modified?}
+  selFace: null,
+  selTemples: null,
+  favs: [],
+  tol: 60
+};
+
+/* ===========================
+   IndexedDB
+   =========================== */
+let db;
+const DB_NAME='berecllo-store';
+const DB_VER=2;
+
+function openDB(){
+  return new Promise((resolve,reject)=>{
+    const req=indexedDB.open(DB_NAME,DB_VER);
+    req.onupgradeneeded=e=>{
+      const d=e.target.result;
+      if(!d.objectStoreNames.contains('images')){
+        d.createObjectStore('images',{keyPath:'id'});
+      }
+      if(!d.objectStoreNames.contains('meta')){
+        d.createObjectStore('meta',{keyPath:'key'});
+      }
+    };
+    req.onsuccess=()=>{db=req.result;resolve(db)};
+    req.onerror =()=>reject(req.error);
+  });
+}
+function idFor(type,name){return `${type}|${name}`;}
+
+function putImageRecord(type,name,blob,modified){
+  return new Promise((resolve,reject)=>{
+    const tx=db.transaction('images','readwrite');
+    tx.objectStore('images').put({
+      id:idFor(type,name),
+      name,
+      type,
+      blob,
+      modified:modified||null
+    });
+    tx.oncomplete=()=>resolve();
+    tx.onerror=()=>reject(tx.error);
+  });
+}
+function getAllImages(){
+  return new Promise((resolve,reject)=>{
+    const tx=db.transaction('images','readonly');
+    const r=tx.objectStore('images').getAll();
+    r.onsuccess=()=>resolve(r.result||[]);
+    r.onerror =()=>reject(r.error);
+  });
+}
+function saveMeta(key,val){
+  return new Promise((resolve,reject)=>{
+    const tx=db.transaction('meta','readwrite');
+    tx.objectStore('meta').put({key,value:val});
+    tx.oncomplete=()=>resolve();
+    tx.onerror=()=>reject(tx.error);
+  });
+}
+function loadMeta(key){
+  return new Promise((resolve,reject)=>{
+    const tx=db.transaction('meta','readonly');
+    const r=tx.objectStore('meta').get(key);
+    r.onsuccess=()=>resolve(r.result?r.result.value:null);
+    r.onerror =()=>reject(r.error);
+  });
+}
+
+/* ===========================
+   Utils images
+   =========================== */
+function imgFromBlob(blob){
+  return new Promise((res,rej)=>{
+    const img=new Image();
+    img.onload=()=>res(img);
+    img.onerror=rej;
+    img.src=URL.createObjectURL(blob);
+  });
+}
+function imgFromFile(file){
+  return new Promise((resolve,reject)=>{
+    const img=new Image();
+    img.onload=()=>resolve(img);
+    img.onerror=reject;
+    const fr=new FileReader();
+    fr.onerror=()=>{try{img.src=URL.createObjectURL(file)}catch(e){reject(e)}};
+    fr.onload =()=>{img.src=fr.result};
+    fr.readAsDataURL(file);
+  });
+}
+
+function removeBackgroundAuto(img,tol){
+  const w=img.naturalWidth||img.width;
+  const h=img.naturalHeight||img.height;
+  const c=document.createElement('canvas');
+  c.width=w; c.height=h;
+  const x=c.getContext('2d',{willReadFrequently:true});
+  x.drawImage(img,0,0);
+  const data=x.getImageData(0,0,w,h);
+  const d=data.data;
+
+  const margin=Math.floor(Math.min(w,h)*0.03),steps=10;
+  let r=0,g=0,b=0,n=0;
+  function pick(sx,sy){
+    const o=(sy*w+sx)*4;
+    r+=d[o]; g+=d[o+1]; b+=d[o+2]; n++;
+  }
+  for(let i=0;i<=steps;i++){
+    const t=Math.floor(i*(w-1)/steps);
+    const u=Math.floor(i*(h-1)/steps);
+    pick(t,margin); pick(t,h-1-margin);
+    pick(margin,u); pick(w-1-margin,u);
+  }
+  r/=n; g/=n; b/=n;
+  for(let i=0;i<d.length;i+=4){
+    const dr=d[i]-r, dg=d[i+1]-g, db=d[i+2]-b;
+    const dist=Math.sqrt(dr*dr+dg*dg+db*db);
+    if(dist<tol){ d[i+3]=0; }
+  }
+  x.putImageData(data,0,0);
+
+  const out=new Image();
+  out.src=c.toDataURL('image/png');
+  return out;
+}
+
+/* ===========================
+   Rendu monture
+   =========================== */
+function faceLabel(n){return n.replace(/\.[^.]+$/,'').toUpperCase();}
+function templesLabel(n){return n.replace(/\.[^.]+$/,'').toLowerCase();}
+
+function updateLabel(){
+  const f=state.selFace    ? faceLabel(state.selFace.name)     : '';
+  const t=state.selTemples ? templesLabel(state.selTemples.name): '';
+  modelLabel.textContent = (f && t) ? `${f} - ${t}` : (f || t || '—');
+}
+
+function redraw(){
+  ctx.clearRect(0,0,cv.width,cv.height);
+  if(state.selTemples?.img){
+    ctx.drawImage(state.selTemples.img,0,0,cv.width,cv.height);
+  }
+  if(state.selFace?.proc){
+    ctx.drawImage(state.selFace.proc,0,0,cv.width,cv.height);
+  }
+  updateLabel();
+  persistSelection();
+}
+
+/* ===========================
+   Galeries
+   =========================== */
+function selectAndRedraw(g,obj,isFace,btn){
+  if(isFace) state.selFace=obj;
+  else       state.selTemples=obj;
+  [...g.children].forEach(c=>c.setAttribute('aria-selected','false'));
+  btn.setAttribute('aria-selected','true');
+  redraw();
+}
+
+function addOrReplaceInArray(arr,obj){
+  const i=arr.findIndex(x=>x.name===obj.name);
+  if(i>=0){
+    arr[i]=obj;
+    return true;
+  }
+  arr.push(obj);
+  return false;
+}
+
+function rebuildGallery(g,arr,isFace){
+  g.innerHTML='';
+  arr.forEach(obj=>{
+    const btn=document.createElement('button');
+    btn.type='button';
+    btn.className='thumb';
+    const label=isFace?faceLabel(obj.name):templesLabel(obj.name);
+    btn.setAttribute('aria-selected',(isFace?state.selFace===obj:state.selTemples===obj)?'true':'false');
+    btn.innerHTML=`<span class="badge">${label}</span>`;
+    btn.onclick=()=>selectAndRedraw(g,obj,isFace,btn);
+    g.appendChild(btn);
+  });
+}
+
+function rebuildAllGalleries(){
+  rebuildGallery(galFaces,  state.faces,   true);
+  rebuildGallery(galTemples,state.temples, false);
+  renderFavs();
+  redraw();
+}
+
+/* ===========================
+   Favoris
+   =========================== */
+function renderFavs(){
+  galFavs.innerHTML='';
+  state.favs.forEach(fv=>{
+    const btn=document.createElement('button');
+    btn.className='thumb';
+    btn.type='button';
+    btn.innerHTML=`<span class="badge">${fv.label}</span>`;
+    btn.onclick=()=>{
+      state.selFace    = state.faces.find(x=>x.name===fv.face)     || state.selFace;
+      state.selTemples = state.temples.find(x=>x.name===fv.temples) || state.selTemples;
+      redraw();
+    };
+    galFavs.appendChild(btn);
+  });
+}
+
+async function saveFavs(){
+  await saveMeta('favs',state.favs.map(f=>({
+    face:f.face,
+    temples:f.temples,
+    label:f.label
+  })));
+}
+async function loadFavs(){
+  const favs=await loadMeta('favs')||[];
+  state.favs=favs.slice(0,5);
+  renderFavs();
+}
+
+function toastMsg(txt){
+  toast.textContent = txt;
+  toast.classList.add('show');
+  setTimeout(()=>toast.classList.remove('show'),1400);
+}
+
+function slugifyForFilename(s){
+  return (s||'berecllo')
+    .normalize('NFD').replace(/[\u0300-\u036f]/g,'')
+    .replace(/[^\w\- ]+/g,'')
+    .replace(/\s+/g,'_')
+    .replace(/_+/g,'_')
+    .replace(/^_+|_+$/g,'');
+}
+
+/* ===========================
+   Boutons Export / Partager / Favoris
+   =========================== */
+btnExport.onclick = ()=>cv.toBlob(b=>{
+  const base=slugifyForFilename(modelLabel.textContent||'berecllo');
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(b);
+  a.download=base+'.png';
+  a.click();
+});
+
+btnShare.onclick = ()=>cv.toBlob(async b=>{
+  const base=slugifyForFilename(modelLabel.textContent||'berecllo');
+  const f=new File([b],base+'.png',{type:'image/png'});
+  if(navigator.canShare && navigator.canShare({files:[f]})){
+    try{
+      await navigator.share({
+        files:[f],
+        title:'Berecllo',
+        text:modelLabel.textContent||''
+      });
+    }catch(e){}
+  }
+});
+
+btnFav.onclick = async ()=>{
+  if(!state.selFace||!state.selTemples) return;
+  const label=modelLabel.textContent;
+  if(state.favs.find(f=>f.face===state.selFace.name && f.temples===state.selTemples.name)) return;
+  state.favs.unshift({
+    face:state.selFace.name,
+    temples:state.selTemples.name,
+    label
+  });
+  if(state.favs.length>5) state.favs.pop();
+  await saveFavs();
+  renderFavs();
+  toastMsg('⭐ Ajouté aux favoris');
+};
+
+/* ===========================
+   Import manuel (+ / drag & drop)
+   =========================== */
+['dragenter','dragover','dragleave','drop'].forEach(ev=>{
+  viewer.addEventListener(ev,(e)=>{e.preventDefault();e.stopPropagation();});
+});
+viewer.addEventListener('drop',(e)=>{
+  const files=e.dataTransfer.files||[];
+  const faces=[...files].filter(f=>/face|front|_f/i.test(f.name));
+  const temples=[...files].filter(f=>/branch|temple|_t/i.test(f.name));
+  const others=[...files].filter(f=>!faces.includes(f)&&!temples.includes(f));
+  if(faces.length) handleManualFiles(faces,true);
+  if(temples.length) handleManualFiles(temples,false);
+  if(others.length&&!faces.length&&!temples.length){
+    handleManualFiles([others[0]],false);
+    if(others[1]) handleManualFiles([others[1]],true);
+  }
+});
+
+document.getElementById('btnAddFaces').onclick = ()=>{
+  inFaces.value='';
+  inFaces.click();
+};
+document.getElementById('btnAddTemples').onclick = ()=>{
+  inTemples.value='';
+  inTemples.click();
+};
+inFaces.addEventListener('change',e=>handleManualFiles(e.target.files,true));
+inTemples.addEventListener('change',e=>handleManualFiles(e.target.files,false));
+
+async function fileToBlob(file){
+  return new Blob([file],{type:file.type||'image/png'});
+}
+
+async function integrateLocalFile(file,isFace){
+  const type = isFace?'face':'temples';
+  const name = file.name;
+  const img  = await imgFromFile(file);
+  const blob = await fileToBlob(file);
+  const stamp = new Date().toISOString();
+
+  const obj = isFace
+    ? {name, img, proc: removeBackgroundAuto(img,state.tol), modified: stamp}
+    : {name, img, modified: stamp};
+
+  addOrReplaceInArray(isFace?state.faces:state.temples, obj);
+
+  await putImageRecord(type,name,blob,stamp);
+  await persistLists();
+
+  if(obj.proc){
+    obj.proc.onload=()=>redraw();
+  }
+  redraw();
+}
+
+async function handleManualFiles(files,isFace){
+  for(const f of files){
+    if(!f.type.startsWith('image/')) continue;
+    await integrateLocalFile(f,isFace);
+  }
+  rebuildAllGalleries();
+}
+
+/* ===========================
+   Métadonnées persistées
+   =========================== */
+async function persistLists(){
+  const facesNames   = state.faces.map(x=>x.name);
+  const templesNames = state.temples.map(x=>x.name);
+  await saveMeta('facesNames',facesNames);
+  await saveMeta('templesNames',templesNames);
+}
+async function persistSelection(){
+  await saveMeta('selection',{
+    face:    state.selFace?.name    || null,
+    temples: state.selTemples?.name || null
+  });
+}
+
+/* ===========================
+   Reload cache local au boot
+   =========================== */
+async function reloadPersisted(){
+  const list=await getAllImages();
+
+  const metaFaces = await loadMeta('facesNames')   || [];
+  const metaTempl = await loadMeta('templesNames') || [];
+  const sel       = await loadMeta('selection')    || {face:null,temples:null};
+
+  const byKey={};
+  for(const it of list){
+    byKey[idFor(it.type,it.name)]=it;
+  }
+
+  const faceNames=[...new Set([...metaFaces,...list.filter(x=>x.type==='face').map(x=>x.name)])];
+  const templNames=[...new Set([...metaTempl,...list.filter(x=>x.type==='temples').map(x=>x.name)])];
+
+  for(const name of faceNames){
+    const rec=byKey[idFor('face',name)];
+    if(!rec) continue;
+    const img=await imgFromBlob(rec.blob);
+    const proc=removeBackgroundAuto(img,state.tol);
+    const obj={name, img, proc, modified:rec.modified||null};
+    addOrReplaceInArray(state.faces,obj);
+    proc.onload=()=>redraw();
+  }
+
+  for(const name of templNames){
+    const rec=byKey[idFor('temples',name)];
+    if(!rec) continue;
+    const img=await imgFromBlob(rec.blob);
+    const obj={name, img, modified:rec.modified||null};
+    addOrReplaceInArray(state.temples,obj);
+  }
+
+  if(sel.face){
+    const f=state.faces.find(x=>x.name===sel.face);
+    if(f) state.selFace=f;
+  }
+  if(sel.temples){
+    const t=state.temples.find(x=>x.name===sel.temples);
+    if(t) state.selTemples=t;
+  }
+
+  rebuildAllGalleries();
+}
+
+/* ===========================
+   Helper URL Google Drive
+   =========================== */
+function apiListURL(folderId){
+  const base = "https://www.googleapis.com/drive/v3/files";
+  const q = new URLSearchParams({
+    key: DRIVE.API_KEY,
+    q: `'${folderId}' in parents and trashed=false`,
+    fields: "files(id,name,mimeType,modifiedTime)",
+    pageSize: 1000,
+    orderBy: "name"
+  }).toString();
+  return base + "?" + q;
+}
+function apiDownloadURL(id){
+  return "https://drive.google.com/uc?export=download&id="+encodeURIComponent(id);
+}
+function proxyURL(u){
+  // on délègue *tout* au worker Cloudflare
+  return DRIVE.WORKER_URL + "?u=" + encodeURIComponent(u);
+}
+
+/* ===========================
+   FETCH via proxy Cloudflare ROBUSTE
+   =========================== */
+async function fetchJSONwithFallback(url){
+  // 1. via proxy Cloudflare (doit renvoyer CORS: *)
+  const proxied = proxyURL(url);
+  try {
+    const r = await fetch(proxied, {
+      mode: "cors",
+      headers: { "Content-Type": "application/json" },
+      cache: "no-store"
+    });
+    if (!r.ok) throw new Error("proxy JSON " + r.status);
+    return await r.json();
+  } catch (err) {
+    console.warn("[Drive Fallback JSON]", err.message);
+    // 2. tentative directe (si jamais proxy HS mais Drive accessible ouvertement)
+    const r2 = await fetch(url, {
+      mode: "cors",
+      cache: "no-store"
+    });
+    if (!r2.ok) throw new Error("Drive direct " + r2.status);
+    return await r2.json();
+  }
+}
+
+async function fetchBLOBwithFallback(url){
+  const proxied = proxyURL(url);
+  try {
+    const r = await fetch(proxied, {
+      mode: "cors",
+      cache: "no-store"
+    });
+    if (!r.ok) throw new Error("proxy BLOB " + r.status);
+    return await r.blob();
+  } catch (err) {
+    console.warn("[Drive Fallback BLOB]", err.message);
+    const r2 = await fetch(url, {
+      mode: "cors",
+      cache: "no-store"
+    });
+    if (!r2.ok) throw new Error("Drive direct " + r2.status);
+    return await r2.blob();
+  }
+}
+
+/* ===========================
+   Sync drive (force écrasement)
+   =========================== */
+async function integrateDriveBlob(type,name,blob,driveTs){
+  // on écrase TOUJOURS le cache local avec la version Drive
+  await putImageRecord(type,name,blob,driveTs||new Date().toISOString());
+
+  const img=await imgFromBlob(blob);
+  const obj = (type==='face')
+    ? {name, img, proc: removeBackgroundAuto(img,state.tol), modified:driveTs||null}
+    : {name, img, modified:driveTs||null};
+
+  addOrReplaceInArray(type==='face'?state.faces:state.temples,obj);
+
+  if(obj.proc){
+    obj.proc.onload=()=>redraw();
+  }
+  redraw();
+
+  await persistLists();
+}
+
+async function syncFolderFromDrive(type, folderId){
+  console.log("[syncFolderFromDrive] start", type);
+  const listUrl = apiListURL(folderId);
+
+  // 1. lister tous les fichiers du dossier Drive via proxy
+  const listing = await fetchJSONwithFallback(listUrl);
+  const files=(listing.files||[]).filter(f=>(f.mimeType||'').startsWith('image/'));
+  console.log("[syncFolderFromDrive] list", type, files.length, "images");
+
+  // 2. pour CHAQUE image Drive : download + écrase local + maj UI
+  for(const it of files){
+    const name     = it.name || (it.id+".png");
+    const driveTs  = it.modifiedTime || null;
+    const fileUrl  = apiDownloadURL(it.id);
+
+    console.log("[syncFolderFromDrive] DL", type, name);
+    const blob     = await fetchBLOBwithFallback(fileUrl);
+
+    await integrateDriveBlob(type,name,blob,driveTs);
+  }
+  console.log("[syncFolderFromDrive] done", type);
+}
+
+async function syncAllFromDrive(){
+  console.log("[syncAllFromDrive] start");
+  // d'abord branches (temples), puis faces
+  await syncFolderFromDrive('temples', DRIVE.TEMPLES_FOLDER_ID);
+  await syncFolderFromDrive('face',    DRIVE.FACES_FOLDER_ID);
+  // après sync: rebuild les galeries pour refléter l'état final
+  rebuildAllGalleries();
+  console.log("[syncAllFromDrive] done");
+}
+
+/* ===========================
+   Zoom molette
+   =========================== */
+let zoomScale=1;
+const MIN_ZOOM=1;
+const MAX_ZOOM=3;
+function applyZoom(){
+  viewer.style.transform=`scale(${zoomScale})`;
+}
+viewer.addEventListener('wheel',e=>{
+  e.preventDefault();
+  if(e.deltaY<0){ zoomScale+=0.1; }
+  else          { zoomScale-=0.1; }
+  if(zoomScale<MIN_ZOOM) zoomScale=MIN_ZOOM;
+  if(zoomScale>MAX_ZOOM) zoomScale=MAX_ZOOM;
+  applyZoom();
+},{passive:false});
+
+/* ===========================
+   BOOT
+   =========================== */
+(async function boot(){
+  try{
+    // 1. stockage dispo
+    await openDB();
+
+    // 2. favoris
+    await loadFavs();
+
+    // 3. charge ce qu'on a déjà localement (rapide, offline friendly)
+    await reloadPersisted();
+
+    // 4. récupère Drive via proxy Cloudflare, et écrase tout avec la version la plus récente en ligne
+    await syncAllFromDrive();
+
+    // propre visuellement
+    driveNote.textContent="";
+  }catch(e){
+    console.error("[BOOT ERROR]", e);
+    driveNote.textContent="";
+  }
+})();
+</script>
+
+</body>
+</html>
