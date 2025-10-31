@@ -7,7 +7,10 @@
 
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect rx='12' ry='12' width='64' height='64' fill='%23000'/%3E%3Ctext x='50%25' y='54%25' dominant-baseline='middle' text-anchor='middle' fill='%23fff' font-family='Helvetica Neue' font-size='28' font-weight='300'%3EB%3C/text%3E%3C/svg%3E">
 
+<!-- police interface boutons -->
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600&display=swap" rel="stylesheet">
+<!-- police Cinzel pour le titre -->
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500&display=swap" rel="stylesheet">
 
 <style>
 :root{
@@ -24,23 +27,25 @@ body{
   margin:0;
   background:#f6f7fa;
   color:#111;
-  font:15px/1.6 'Helvetica Neue',Helvetica,Arial,sans-serif;
+  font:15px/1.6 "Helvetica Neue",Helvetica,Arial,sans-serif;
 }
 
-/* HEADER */
+/* HEADER (nouvelle version glossy blanche) */
 .header-wrap{
   position:fixed;
   inset:0 0 auto 0;
   height:var(--headerH);
-  background:#000; /* fond noir pour bien voir le logo blanc */
-  border-bottom:1px solid var(--border);
+  background:radial-gradient(circle at 20% 20%, #ffffff 0%, #f9f9f9 60%, #f0f0f0 100%);
+  border-bottom:1px solid rgba(224,192,102,.55); /* liseré doré chaud très léger */
   display:flex;
   align-items:center;
   justify-content:space-between;
   padding:0 24px;
   z-index:100;
-  box-shadow:0 8px 24px rgba(0,0,0,.6);
+  box-shadow:0 12px 32px rgba(0,0,0,.15), 0 2px 4px rgba(255,255,255,.8) inset;
 }
+
+/* bloc gauche (logo) */
 .brand{
   display:flex;
   align-items:center;
@@ -57,20 +62,26 @@ body{
   width:auto;
   display:block;
 }
+
+/* bloc droit (titres) */
 .headerTexts{
   text-align:right;
-  color:#fff;
+  color:#000;
 }
 .title{
-  font:300 22px/1 'Helvetica Neue',sans-serif;
+  /* Cinzel haute gamme */
+  font-family:'Cinzel', serif;
+  font-weight:400;
+  font-size:22px;
+  line-height:1.1;
   letter-spacing:.06em;
-  color:#fff;
+  color:#000;
   margin:0;
 }
 .subTitleSmall{
   font-size:12px;
   font-weight:500;
-  color:#9ca3af;
+  color:#6b6b6b;
   letter-spacing:.08em;
   text-transform:uppercase;
   margin:4px 0 0 0;
@@ -79,6 +90,7 @@ body{
 /* PAGE LAYOUT */
 .page{
   padding-top:calc(var(--headerH) + 20px);
+  padding-bottom:60px; /* garde l'espace visuel bas */
 }
 .wrap{
   max-width:1760px;
@@ -92,6 +104,25 @@ body{
 }
 @media(max-width:1200px){
   .grid{grid-template-columns:1fr;}
+}
+
+/* SIGNATURE bas gauche (modifiée) */
+.signature{
+  position:fixed;
+  left:16px;
+  bottom:16px;
+  font:500 12px/1.4 "Helvetica Neue",Arial,sans-serif;
+  color:#6b6b6b;
+  background:rgba(255,255,255,.7);
+  border:1px solid rgba(0,0,0,.08);
+  border-radius:10px;
+  box-shadow:0 8px 20px rgba(0,0,0,.08);
+  backdrop-filter:blur(6px);
+  padding:10px 14px;
+  z-index:9999;
+  text-align:left;
+  max-width:220px;
+  word-break:break-word;
 }
 
 /* CARD PRINCIPALE */
@@ -140,7 +171,7 @@ canvas#cv{
   background:rgba(255,255,255,.96);
   border:1px solid rgba(0,0,0,.1);
   backdrop-filter:blur(6px);
-  font:300 21px/1.2 'Helvetica Neue',sans-serif;
+  font:300 21px/1.2 "Helvetica Neue",sans-serif;
   letter-spacing:.12em;
   color:#0b0d10;
   box-shadow:0 10px 24px rgba(0,0,0,.12);
@@ -165,13 +196,14 @@ canvas#cv{
   border:0;
   border-radius:12px;
   padding:12px 18px;
-  font:600 15px/1.1 'Helvetica Neue',sans-serif;
+  font:600 15px/1.1 "Helvetica Neue",sans-serif;
   color:#111;
   background:#fff;
   position:relative;
   isolation:isolate;
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.9),
-             0 6px 16px rgba(0,0,0,.08);
+  box-shadow:
+     inset 0 1px 0 rgba(255,255,255,.9),
+     0 6px 16px rgba(0,0,0,.08);
   transition:transform .1s,box-shadow .15s;
 }
 .btn3d::before{
@@ -258,7 +290,8 @@ canvas#cv{
   inset:0;
   border-radius:12px;
   pointer-events:none;
-  box-shadow:0 0 0 0 rgba(0,0,0,0);
+  box-shadow:
+    0 0 0 0 rgba(0,0,0,0);
   transition:box-shadow .2s;
 }
 .thumb[aria-selected="true"] .thumbInnerBorder{
@@ -268,7 +301,7 @@ canvas#cv{
     0 6px 14px rgba(0,0,0,.06);
 }
 
-/* miniature réelle */
+/* miniature carrée preview texture */
 .thumbImg{
   position:absolute;
   inset:0;
@@ -277,12 +310,12 @@ canvas#cv{
   background-repeat:no-repeat;
 }
 
-/* label + croix */
+/* label + petite croix */
 .thumbLabel{
   position:absolute;
   left:10px;
   bottom:10px;
-  right:10px;
+  right:32px;
   font:600 15px/1.3 'Montserrat',sans-serif;
   letter-spacing:.06em;
   text-align:left;
@@ -301,7 +334,7 @@ canvas#cv{
   background:rgba(0,0,0,.55);
   color:#fff;
   font-size:12px;
-  font-family:'Helvetica Neue',sans-serif;
+  font-family:"Helvetica Neue",sans-serif;
   line-height:22px;
   text-align:center;
   font-weight:600;
@@ -311,7 +344,7 @@ canvas#cv{
   user-select:none;
 }
 
-/* NOTE (debug) masquée */
+/* NOTE (debug Drive) masquée visuellement */
 .note{
   margin:10px 0 20px 20px;
   font:600 12px 'Montserrat',sans-serif;
@@ -346,11 +379,11 @@ canvas#cv{
 <header class="header-wrap">
   <div class="brand">
     <a href="https://berecllo.fr/" target="_blank" title="Visiter le site Berecllo" aria-label="Berecllo">
-      <!-- SVG fourni, préservé tel quel, en blanc -->
-      <svg xmlns="http://www.w3.org/2000/svg" id="Calque_1" data-name="Calque 1" viewBox="0 0 350 173.66" width="200" height="60" aria-hidden="true">
+      <!-- LOGO SVG en NOIR -->
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 350 173.66" width="200" height="60" aria-hidden="true">
         <defs><style>
-          .cls-1 { stroke: #fff; stroke-miterlimit: 10; stroke-width: .37px; }
-          .cls-1, .cls-2 { fill: #fff; }
+          .cls-1 { stroke: #000; stroke-miterlimit: 10; stroke-width: .37px; }
+          .cls-1, .cls-2 { fill: #000; }
           .cls-2 { stroke-width: 0px; }
         </style></defs>
         <g><rect class="cls-2" y="133.47" width="350" height="2.39"></rect><g>
@@ -385,7 +418,7 @@ canvas#cv{
     </a>
   </div>
   <div class="headerTexts">
-    <h1 class="title">Studio Berecllo — By&nbsp;S.B</h1>
+    <h1 class="title">Studio Berecllo - By S.B</h1>
     <div class="subTitleSmall">Configuration monture • rendu photo-réaliste</div>
   </div>
 </header>
@@ -431,6 +464,13 @@ canvas#cv{
 
     </div>
   </div>
+</div>
+
+<!-- SIGNATURE BAS GAUCHE -->
+<div class="signature">
+  Sébastien BOURDON<br>
+  sb.optic1@gmail.com<br>
+  06&nbsp;62&nbsp;71&nbsp;27&nbsp;52
 </div>
 
 <div id="toast" class="toast">⭐ Ajouté aux favoris</div>
@@ -575,7 +615,7 @@ function imgFromBlob(blob){
   });
 }
 
-/* détourage face (fond transparent) */
+/* détourage face */
 function removeBackgroundAuto(img,tol){
   const w=img.naturalWidth||img.width;
   const h=img.naturalHeight||img.height;
@@ -614,7 +654,7 @@ function removeBackgroundAuto(img,tol){
   return out;
 }
 
-/* miniature carrée + contraste texte */
+/* miniature + contraste texte */
 function makeThumbInfo(img){
   const SIZE=200;
   const c=document.createElement('canvas');
@@ -857,7 +897,7 @@ btnFav.onclick = async ()=>{
   toastMsg('⭐ Ajouté aux favoris');
 };
 
-/* Persistance de sélection/lists */
+/* Persistance listes/sélection */
 async function persistLists(){
   const fNames=state.faces.map(x=>x.name);
   const tNames=state.temples.map(x=>x.name);
@@ -1064,7 +1104,7 @@ async function syncFolder(type,folderId){
   }
 }
 
-/* Zoom molette local */
+/* Zoom molette */
 const MIN_ZOOM=1.0;
 const MAX_ZOOM=2.5;
 viewer.addEventListener('wheel',e=>{
